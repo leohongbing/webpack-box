@@ -1,0 +1,75 @@
+{
+  "name": "box",
+  "version": "1.0.9",
+  "private": true,
+  "description": "前端项目最佳实践集合",
+  "author": "jijiang",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "webpack-box dev",
+    "dev:dash": "webpack-dashboard -- webpack-box dev",
+    "build": "webpack-box build",
+    "dev:docker": "docker run -v \"$(PWD)\":/usr/src/webpack-box/ docker-webpack-box npm run dev",
+    "build:docker": "docker build -t docker-webpack-box .",
+    "info": "pk info",
+    "lint": "webpack-box tslint",
+    "cr": "node tools/create-readme",
+    "cz": "npm run cr && npm run log && git add . && git cz",
+    "log": "conventional-changelog --config ./node_modules/vue-cli-plugin-commitlint/lib/log -i CHANGELOG.md -s -r 0"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "@commitlint/config-conventional": "^8.2.0",
+    "@pkb/webpack-box": "^1.2.11",
+    "@pkb/cli": "^1.2.10",
+    "@pkb/plugin-eslint": "^1.2.10",
+    "@pkb/plugin-react": "^1.2.10",
+    "@pkb/plugin-stylelint": "^1.2.10",
+    "@pkb/plugin-tslint": "^1.2.10",
+    "commitizen": "^4.0.3",
+    "commitlint": "^8.2.0",
+    "conventional-changelog-cli": "^2.0.28",
+    "husky": "^3.1.0",
+    "lerna": "^3.15.0",
+    "lint-staged": "^9.5.0",
+    "vue-cli-plugin-commitlint": "^1.0.10"
+  },
+  "bugs": {
+    "url": "https://github.com/luoxue-victor/learn_webpack/issues"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/vue-cli-plugin-commitlint/lib/cz"
+    }
+  },
+  "homepage": "https://github.com/luoxue-victor/learn_webpack#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "license": "ISC",
+  "lint-staged": {
+    "*.{vue,htm,html,css,sss,less,scss}": [
+      "webpack-box stylelint",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "webpack-box tslint",
+      "git add"
+    ],
+    "*.{js,jsx}": [
+      "webpack-box eslint",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoxue-victor/learn_webpack.git"
+  },
+  "sideEffects": true,
+  "dependencies": {}
+}
